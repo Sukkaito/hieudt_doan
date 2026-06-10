@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.8.2-runtime-ubuntu24.04
+FROM runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2404
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
@@ -11,21 +11,9 @@ WORKDIR /app
 # - curl (needed by Ollama install script)
 # - python3/pip for running the API code
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.12 \
-    python3.12-venv \
-    python3-pip \
     zstd \
     curl \
-    libgl1 \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    libxcb1 \
     && rm -rf /var/lib/apt/lists/*
-
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Ollama exactly as in the source notebook/script
 RUN curl -fsSL https://ollama.com/install.sh | sh
@@ -44,6 +32,10 @@ RUN pip install --upgrade pip && \
     scipy \
     google-generativeai \
     google-genai
+
+RUN python3 -c "import cv2; print('cv2 ok')"
+
+RUN python3 -c "from ultralytics import YOLO; YOLO('yolov8n-pose.pt')"
 
 COPY hieudt_doan.py /app/hieudt_doan.py
 

@@ -2,7 +2,8 @@ FROM nvidia/cuda:12.8.2-runtime-ubuntu24.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PIP_BREAK_SYSTEM_PACKAGES=1
 
 WORKDIR /app
 
@@ -17,7 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zstd \
     curl \
     && ln -sf /usr/bin/python3.12 /usr/bin/python3 \
-    && python3.12 -m pip install --upgrade pip \
     && ln -sf /usr/bin/pip3 /usr/local/bin/pip \
     && rm -rf /var/lib/apt/lists/*
 

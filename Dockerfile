@@ -2,8 +2,7 @@ FROM nvidia/cuda:12.8.2-runtime-ubuntu24.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_BREAK_SYSTEM_PACKAGES=1
+    PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
@@ -17,16 +16,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     zstd \
     curl \
-    && ln -sf /usr/bin/python3.12 /usr/bin/python3 \
-    && ln -sf /usr/bin/pip3 /usr/local/bin/pip \
     && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Ollama exactly as in the source notebook/script
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
 # Python packages deduplicated from the source file only
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install \
+RUN pip install --upgrade pip && \
+    pip install \
     ultralytics \
     fastapi \
     uvicorn \

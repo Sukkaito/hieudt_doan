@@ -11,10 +11,14 @@ WORKDIR /app
 # - curl (needed by Ollama install script)
 # - python3/pip for running the API code
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 \
+    python3.12 \
+    python3.12-venv \
     python3-pip \
     zstd \
     curl \
+    && ln -sf /usr/bin/python3.12 /usr/bin/python3 \
+    && python3.12 -m pip install --upgrade pip \
+    && ln -sf /usr/bin/pip3 /usr/local/bin/pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Ollama exactly as in the source notebook/script

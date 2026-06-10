@@ -1,4 +1,4 @@
-FROM runpod/base:1.0.2-ubuntu2204
+FROM nvidia/cuda:12.8.2-runtime-ubuntu24.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \

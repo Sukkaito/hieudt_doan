@@ -46,9 +46,6 @@ print("YOLO Pose OK")
 # AI POSE ANALYSIS API - OPTIMIZED VERSION v2.3
 # =========================================================
 
-import subprocess
-subprocess.run(["fuser", "-k", "8000/tcp"], capture_output=True)
-
 # =========================================================
 # IMPORT
 # =========================================================

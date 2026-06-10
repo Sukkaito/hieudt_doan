@@ -16,6 +16,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     zstd \
     curl \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libxcb1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m venv /opt/venv

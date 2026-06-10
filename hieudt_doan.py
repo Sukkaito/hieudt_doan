@@ -112,7 +112,9 @@ model = YOLO("yolov8n-pose.pt")
 try:
     model.to("cuda")
     print("✅ Using GPU")
-except:
+except Exception as e:
+    import traceback
+    print(f"⚠️ GPU not available, falling back to CPU: {traceback.format_exc()}")
     print("⚠️ Using CPU")
 
 print("✅ YOLO Pose Loaded")
